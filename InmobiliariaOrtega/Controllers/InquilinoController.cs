@@ -4,56 +4,60 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InmobiliariaOrtega.Controllers
 {
-    public class PropietarioController : Controller
+    public class InquilinoController : Controller
     {
-        RepositorioPropietario repositorio;
+        RepositorioInquilino repositorio;
 
-      public PropietarioController()
-        { 
-            repositorio = new RepositorioPropietario();
+        public InquilinoController()
+        {
+            repositorio = new RepositorioInquilino();
         }
-
+        // GET: InquilinoController
         public ActionResult Index()
         {
             var lista = repositorio.ObtenerTodos();
             return View(lista);
         }
+
+        // GET: InquilinoController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
+
+        // GET: InquilinoController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PropietarioController/Create
+        // POST: InquilinoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Propietario p)
+        public ActionResult Create(Inquilino i)
         {
             try
             {
-                int res = repositorio.Alta(p);
-                if(res> 0)
-                return RedirectToAction(nameof(Index));
-                else 
+                int res = repositorio.Alta(i);
+                if (res > 0)
+                    return RedirectToAction(nameof(Index));
+                else
                     return View();
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return View();
             }
         }
 
-        // GET: PropietarioController/Edit/5
+        // GET: InquilinoController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: PropietarioController/Edit/5
+        // POST: InquilinoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -68,13 +72,13 @@ namespace InmobiliariaOrtega.Controllers
             }
         }
 
-        // GET: PropietarioController/Delete/5
+        // GET: InquilinoController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: PropietarioController/Delete/5
+        // POST: InquilinoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
