@@ -12,26 +12,22 @@ namespace InmobiliariaOrtega.Controllers
         {
             repositorio = new RepositorioInquilino();
         }
-        // GET: InquilinoController
         public ActionResult Index()
         {
             var lista = repositorio.ObtenerTodos();
             return View(lista);
         }                                 
-
-        // GET: InquilinoController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: InquilinoController/Create
+        
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: InquilinoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Inquilino i)
@@ -50,14 +46,10 @@ namespace InmobiliariaOrtega.Controllers
                 return View();
             }
         }
-
-        // GET: InquilinoController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
-
-        // POST: InquilinoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -71,8 +63,6 @@ namespace InmobiliariaOrtega.Controllers
                 return View();
             }
         }
-
-        // GET: InquilinoController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
