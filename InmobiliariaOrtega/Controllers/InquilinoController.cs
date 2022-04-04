@@ -17,7 +17,7 @@ namespace InmobiliariaOrtega.Controllers
         {
             var lista = repositorio.ObtenerTodos();
             return View(lista);
-        }
+        }                                 
 
         // GET: InquilinoController/Details/5
         public ActionResult Details(int id)

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<InmobiliariaOrtega.Models.Inquilino>
+
+@{
+    ViewData["Title"] = "Inquilinos";
+}
+
+<h1>Inquilinos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary"><i class="fas fa-plus-square"></i> Nuevo inquilino</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInquilino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LugarTrabajo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreGarante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApellidoGarante)
+            </th>
+                <th>
+                @Html.DisplayNameFor(model => model.DniGarante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelefonoGarante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailGarante)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    #@Html.DisplayFor(modelItem => item.IdInquilino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                  <td>
+                    #@Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LugarTrabajo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreGarante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApellidoGarante)
+                </td>
+                     <td>
+                    #@Html.DisplayFor(modelItem => item.DniGarante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelefonoGarante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailGarante)
+                </td>
+              
+                <td>
+                    <a asp-route-id="@item.IdInquilino" asp-controller="Inquilino" asp-action="Details" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Detalles">
+                        <i class="fas fa-file-alt"></i>
+                    </a>
+                    <a asp-route-id="@item.IdInquilino" asp-controller="Inquilino" asp-action="Edit" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a asp-route-InquilinoId="@item.IdInquilino" asp-controller="Contrato" asp-action="Index" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Contratos">
+                        <i class="fas fa-handshake"></i>
+                    </a>
+                  
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

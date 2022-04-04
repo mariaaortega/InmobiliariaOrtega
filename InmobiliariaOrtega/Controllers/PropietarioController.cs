@@ -24,10 +24,17 @@ namespace InmobiliariaOrtega.Controllers
         }
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        // POST: PropietarioController/Create
+    
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Propietario p)
@@ -47,13 +54,12 @@ namespace InmobiliariaOrtega.Controllers
             }
         }
 
-        // GET: PropietarioController/Edit/5
+        
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: PropietarioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
