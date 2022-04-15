@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdInquilino)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -24,27 +24,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Telefono)
             </th>
-             <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LugarTrabajo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreGarante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApellidoGarante)
-            </th>
-                <th>
-                @Html.DisplayNameFor(model => model.DniGarante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TelefonoGarante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailGarante)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -53,7 +32,7 @@
         {
             <tr>
                 <td>
-                    #@Html.DisplayFor(modelItem => item.IdInquilino)
+                    #@Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
@@ -64,41 +43,25 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Telefono)
                 </td>
-                  <td>
-                    #@Html.DisplayFor(modelItem => item.Email)
-                </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LugarTrabajo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreGarante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApellidoGarante)
-                </td>
-                     <td>
-                    #@Html.DisplayFor(modelItem => item.DniGarante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TelefonoGarante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailGarante)
-                </td>
-              
-                <td>
-                    <a asp-route-id="@item.IdInquilino" asp-controller="Inquilino" asp-action="Details" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Detalles">
+                    <a asp-route-id="@item.Id" asp-controller="Inquilino" asp-action="Details" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Detalles">
                         <i class="fas fa-file-alt"></i>
                     </a>
-                    <a asp-route-id="@item.IdInquilino" asp-controller="Inquilino" asp-action="Edit" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+                    <a asp-route-id="@item.Id" asp-controller="Inquilino" asp-action="Edit" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a asp-route-InquilinoId="@item.IdInquilino" asp-controller="Contrato" asp-action="Index" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Contratos">
+                    <a asp-route-InquilinoId="@item.Id" asp-controller="Contrato" asp-action="Index" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Contratos">
                         <i class="fas fa-handshake"></i>
                     </a>
-                  
+                    @if (User.IsInRole("Administrador") || User.IsInRole("SuperAdministrador"))
+                    {
+                        <a asp-route-id="@item.Id" asp-controller="Inquilino" asp-action="Delete" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Eliminar">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+

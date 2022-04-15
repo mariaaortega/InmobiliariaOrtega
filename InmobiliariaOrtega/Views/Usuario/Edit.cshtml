@@ -1,36 +1,26 @@
-﻿@model InmobiliariaOrtega.Models.Propietario
-
+﻿@using InmobiliariaOrtega.Models
+@model InmobiliariaOrtega.Models.Usuario
 
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Crear</h1>
-<h4>Propietario</h4>
+<h1>Editar</h1>
+<h4>Usuario</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" maxlength="50" class="form-control" />
+                <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" maxlength="50" class="form-control" />
+                <input asp-for="Apellido" class="form-control" />
                 <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dni" class="control-label"></label>
-                <input type="number" asp-for="Dni" class="form-control" />
-                <span asp-validation-for="Dni" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input type="number" asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -39,11 +29,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Clave" class="control-label"></label>
-                <input type="password" asp-for="Clave" class="form-control" />
-                <span asp-validation-for="Clave" class="text-danger"></span>
+                <input type="password" name="Clave" id="Clave" class="form-control" placeholder="Nueva clave (dejar vacío para no editar)"/>
             </div>
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <label asp-for="Rol" class="control-label"></label>
+                <select asp-for="Rol" class="form-control">
+                    @foreach (KeyValuePair<int, string> kvp in Usuario.ObtenerRoles())
+                    {
+                        @:<option value="@kvp.Key" @(Model.Rol == kvp.Key ? "selected" : "")>@kvp.Value</option>
+                    }
+                </select>
+                <span asp-validation-for="Rol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -56,4 +55,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-

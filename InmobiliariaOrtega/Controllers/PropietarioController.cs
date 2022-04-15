@@ -1,97 +1,125 @@
 ﻿using InmobiliariaOrtega.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InmobiliariaOrtega.Controllers
 {
+    [Authorize(Policy = "Empleado")]
     public class PropietarioController : Controller
     {
-        RepositorioPropietario repositorio;
+        private readonly IConfiguration configuration;
+        private RepositorioPropietario repositorioPropietario;
 
-      public PropietarioController()
-        { 
-            repositorio = new RepositorioPropietario();
+        public PropietarioController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+            repositorioPropietario = new RepositorioPropietario(configuration);
         }
 
+        // GET: TestController
         public ActionResult Index()
         {
-            var lista = repositorio.ObtenerTodos();
-            return View(lista);
+            return View(repositorioPropietario.ObtenerTodos<Propietario>());
         }
+
+        // GET: TestController/Details/5
         public ActionResult Details(int id)
+        {
+            return View(repositorioPropietario.ObtenerPorId<Propietario>(id));
+        }
+
+        // GET: TestController/Create
+        public ActionResult Create()
         {
             return View();
         }
-        public ActionResult Create()
+
+        // POST: TestController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Propietario e)
         {
             try
             {
-                return View();
+                repositorioPropietario.Alta(e);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                throw;
-            }
-        }
-
-    
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Propietario p)
-        {
-            try
-            {
-                int res = repositorio.Alta(p);
-                if(res> 0)
-                return RedirectToAction(nameof(Index));
-                else 
-                    return View();
-
-            }
-            catch (Exception ex) 
-            {
+                string msg = ex.Message;
+#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
+                if (ex is SqlException && (ex as SqlException).Number == 2627)
+                    msg = "Ya existe un propietario asociado a ese Email.";
+#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
+                TempData["Error"] = msg;
                 return View();
             }
         }
 
-        
+        // GET: TestController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(repositorioPropietario.ObtenerPorId<Propietario>(id));
         }
 
+        // POST: TestController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Propietario e)
         {
             try
             {
+                Propietario p = repositorioPropietario.ObtenerPorId<Propietario>(id);
+                e.Clave = p.Clave;
+                repositorioPropietario.Editar(e);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                string msg = ex.Message;
+#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
+                if (ex is SqlException && (ex as SqlException).Number == 2627)
+                    msg = "Ya existe un propietario asociado a ese Email.";
+#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
+                TempData["Error"] = msg;
+                return View(repositorioPropietario.ObtenerPorId<Propietario>(id));
             }
         }
 
-        // GET: PropietarioController/Delete/5
+        // GET: TestController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(repositorioPropietario.ObtenerPorId<Propietario>(id));
         }
 
-        // POST: PropietarioController/Delete/5
+        // POST: TestController/Delete/5
         [HttpPost]
+        [Authorize(Policy = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
+                repositorioPropietario.Eliminar(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                string msg = ex.Message;
+#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
+                if (ex is SqlException && (ex as SqlException).Number == 547)
+                    msg = "No se puede eliminar el Propietario porque existe un Inmueble a nombre suyo.";
+#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
+                TempData["Error"] = msg;
+                return View(repositorioPropietario.ObtenerPorId<Propietario>(id));
             }
         }
     }
