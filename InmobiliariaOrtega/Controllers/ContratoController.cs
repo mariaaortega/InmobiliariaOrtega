@@ -49,14 +49,13 @@ namespace InmobiliariaOrtega.Controllers
         {
             try
             {
-#pragma warning disable CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
                 Dictionary<string, string> filtros = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
-#pragma warning restore CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
+
 
                 string condiciones = "";
-#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
+
                 int inmuebleId = Convert.ToInt32(filtros["InmuebleId"]);
-#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
+
                 condiciones += inmuebleId == 0 ? "" : " AND InmuebleId = " + inmuebleId;
 
                 int inquilinoId = Convert.ToInt32(filtros["InquilinoId"]);

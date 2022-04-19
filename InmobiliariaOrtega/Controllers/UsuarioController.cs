@@ -75,7 +75,6 @@ namespace InmobiliariaOrtega.Controllers
             }
         }
 
-        //[Route("salir", Name = "logout")] que es esto??
         [AllowAnonymous]
         [Authorize(Policy = "Empleado")]
         public async Task<ActionResult> Logout()
@@ -120,10 +119,10 @@ namespace InmobiliariaOrtega.Controllers
             catch (Exception ex)
             {
                 string msg = ex.Message;
-#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
+
                 if (ex is SqlException && (ex as SqlException).Number == 2627)
                     msg = "Ya existe una cuenta asociada a ese Email.";
-#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
+
                 TempData["Error"] = msg;
                 return View();
             }
